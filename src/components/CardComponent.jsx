@@ -5,13 +5,13 @@ export default function CardComponent({ project }) {
 
   const getProgressClass = (progress) => {
     switch (progress) {
-      case 100:
+      case "100":
         return "bg-custom-sky-blue-500";
-      case 75:
+      case "75":
         return "bg-custom-carrot";
-      case 50:
+      case "50":
         return "bg-custom-yellow-500";
-      case 25:
+      case "25":
         return "bg-custom-pink";
       default:
         return "";
@@ -30,7 +30,7 @@ export default function CardComponent({ project }) {
         <h5 className="capitalize mb-2 text-2xl font-semibold tracking-tight text-gray-900">
           {project.projectName}
         </h5>
-        <p className="line-clamp-2 mb-3 font-normal text-justify text-gray-400">
+        <p className="line-clamp-2 mb-3 font-normal text-justify text-gray-400 min-h-13">
           {project.description}
         </p>
 

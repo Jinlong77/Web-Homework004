@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
 
-export default function AddNewProjectComponent() {
+export default function AddNewProjectComponent({ addAssignment }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     projectName: "",
     dueDate: "",
     progress: "",
-    description: "", 
+    description: "",
+    daysLeft: 0,
   });
   const [errors, setErrors] = useState({});
   const [projects, setProjects] = useState([]);
@@ -36,9 +37,14 @@ export default function AddNewProjectComponent() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
+      formData.daysLeft = Math.floor((new Date(formData.dueDate) - new Date()) / (1000 * 60 * 60 * 24));
+      if(formData.description === "") {
+        formData.description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis impedit officia labore illo rem aspernatur cumque placeat, autem quod repellat fugiat accusamus officiis at dolores sed soluta eum, eligendi voluptatibus?";
+      }
       setProjects([...projects, formData]);
-      setFormData({ projectName: "", dueDate: "", progress: "", description: "" });
-      setIsModalOpen(false);
+      addAssignment(formData);
+      setFormData({ projectName: "", dueDate: "", progress: "", description: "", daysLeft: 0 });
+      // setIsModalOpen(false);
     }
   };
 
@@ -46,7 +52,7 @@ export default function AddNewProjectComponent() {
     <div>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="text-white bg-cyan-400 hover:bg-cyan-500 hover:cursor-pointer focus:ring-3 focus:outline-none focus:ring-custom-sky-blue-500 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-custom-sky-blue-500 dark:hover:bg-custom-sky-blue-500 dark:focus:ring-custom-sky-blue-500 flex items-center gap-2"
+        className="text-white bg-cyan-300 hover:bg-cyan-500 hover:cursor-pointer focus:ring-3 focus:outline-none focus:ring-custom-sky-blue-500 font-medium rounded-lg text-sm px-3 py-2.5 text-center flex items-center gap-2"
         type="button"
       >
         <Plus size={22} /> <span className="text-base">New Project</span>

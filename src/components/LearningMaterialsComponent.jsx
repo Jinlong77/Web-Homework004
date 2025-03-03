@@ -5,15 +5,17 @@ import FilterComponent from "./FilterComponent";
 
 export default function LearningMaterialsComponent({ learningMaterials, onToggleFavorite }) {
 
-  const [sortOrder, setSortOrder] = useState("A-Z");
+  const [sortOrder, setSortOrder] = useState("Sort-By");
 
   const sortedMaterials = [...learningMaterials]
     .filter((material) => material.title.toLowerCase())
     .sort((a, b) => {
       if (sortOrder === "A-Z") {
         return a.title.localeCompare(b.title);
-      } else {
+      } else if (sortOrder === "Z-A") {
         return b.title.localeCompare(a.title);
+      } else {
+        return 0;
       }
     });
 
