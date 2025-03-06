@@ -5,6 +5,17 @@ import FilterComponent from "./FilterComponent";
 
 export default function LearningMaterialsComponent({ learningMaterials, onToggleFavorite }) {
 
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+        weekday: 'short',
+        day: '2-digit',
+        month: 'short', 
+        year: 'numeric' 
+    }).replace(',', '');
+  }
+
   const [sortOrder, setSortOrder] = useState("Sort-By");
 
   const sortedMaterials = [...learningMaterials]
@@ -56,7 +67,7 @@ export default function LearningMaterialsComponent({ learningMaterials, onToggle
                   onClick={() => onToggleFavorite(material.id)}
                 />
               </div>
-              <p className="text-gray-400 text-sm">Posted at: {material.postedAt}</p>
+              <p className="text-gray-400 text-sm">Posted at: {formatDate(material.postedAt)}</p>
             </div>
           </div>
         ))}

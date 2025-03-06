@@ -18,12 +18,21 @@ export default function CardComponent({ project }) {
     }
   };
 
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+    });
+  }
+
   return (
     <div>
       <div className="max-w-sm p-6 bg-white rounded-2xl shadow-sm">
         <div className="flex justify-between mb-5">
           {/* date */}
-          <p className={`text-custom-sky-blue font-medium`}>{project.dueDate}</p>
+          <p className={`text-custom-sky-blue font-medium`}>{formatDate(project.dueDate)}</p>
           <EllipsisVertical size={20} color="#374957" />
         </div>
 

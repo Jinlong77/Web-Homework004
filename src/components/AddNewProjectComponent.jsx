@@ -30,8 +30,9 @@ export default function AddNewProjectComponent({ addAssignment }) {
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: "" });
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
   const handleSubmit = (e) => {
@@ -44,7 +45,6 @@ export default function AddNewProjectComponent({ addAssignment }) {
       setProjects([...projects, formData]);
       addAssignment(formData);
       setFormData({ projectName: "", dueDate: "", progress: "", description: "", daysLeft: 0 });
-      // setIsModalOpen(false);
     }
   };
 
