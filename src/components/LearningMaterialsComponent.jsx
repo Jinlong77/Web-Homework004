@@ -2,21 +2,25 @@ import React from "react";
 import { useState } from "react";
 import { Star } from "lucide-react";
 import FilterComponent from "./FilterComponent";
+import {learningMaterials as initialLearningMaterials } from "../data/learningMaterials";
 
-export default function LearningMaterialsComponent({ learningMaterials, onToggleFavorite }) {
 
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+      weekday: 'short',
+      day: '2-digit',
+      month: 'short', 
+      year: 'numeric' 
+  }).replace(',', '');
+}
 
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-        weekday: 'short',
-        day: '2-digit',
-        month: 'short', 
-        year: 'numeric' 
-    }).replace(',', '');
-  }
+export default function LearningMaterialsComponent() {
 
   const [sortOrder, setSortOrder] = useState("Sort-By");
+  const [learningMaterials, setLearningMaterials] = useState(
+      initialLearningMaterials
+    );
 
   const sortedMaterials = [...learningMaterials]
     .filter((material) => material.title.toLowerCase())
@@ -33,6 +37,16 @@ export default function LearningMaterialsComponent({ learningMaterials, onToggle
   const handleFilterChange = (e) => {
     setSortOrder(e.target.value);
   }
+
+  const onToggleFavorite = (id) => {
+    setLearningMaterials((prevMaterials) =>
+      prevMaterials.map((material) =>
+        material.id === id
+          ? { ...material, isFavorite: !material.isFavorite }
+          : material
+      )
+    );
+  };
   
   return (
     <div className="bg-white drop-shadow-lg rounded-2xl overflow-auto h-[80vh] scrollbar-hide">

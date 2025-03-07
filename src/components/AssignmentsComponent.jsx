@@ -37,24 +37,15 @@ export default function AssignmentsComponent({ searchString }) {
     }
   ]);
 
-  const [assignmentList, setAssignmentList] = useState([]);
-
-  useEffect(() => {
-    setAssignmentList(handleSearch());
-  }, [searchString, assignments]);
-
-  const handleSearch = () => {
-    if (searchString === "") {
-      return assignments;
-    }
-    return assignments.filter((assignment) =>
-      assignment.projectName.toLowerCase().includes(searchString.toLowerCase())
-    );
-  };
-
   const addAssignment = (newAssignment) => {
     setAssignments([...assignments, newAssignment]);
   };
+
+  const filteredAssignments = searchString
+    ? assignments.filter((assignment) =>
+        assignment.projectName.toLowerCase().includes(searchString.toLowerCase())
+      )
+    : assignments;
   
   return (
     <div className="mt-5">
@@ -64,7 +55,7 @@ export default function AssignmentsComponent({ searchString }) {
         <AddNewProjectComponent addAssignment={addAssignment}/>
       </div>
       <div className="mt-5 pb-5 grid grid-cols-3 gap-4 overflow-auto scrollbar-hide max-h-[33.9rem]">
-        {assignmentList.map((assignment, index) => (
+        {filteredAssignments.map((assignment, index) => (
           <CardComponent key={index} project={assignment} />
         ))}
       </div>

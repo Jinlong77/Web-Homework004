@@ -1,6 +1,16 @@
 import { EllipsisVertical } from "lucide-react";
 import React from "react";
 
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+  });
+}
+
 export default function CardComponent({ project }) {
 
   const getProgressClass = (progress) => {
@@ -17,15 +27,6 @@ export default function CardComponent({ project }) {
         return "";
     }
   };
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric'
-    });
-  }
 
   return (
     <div>
